@@ -1,8 +1,6 @@
 package com.jd.test.state;
 
 
-import org.checkerframework.checker.units.qual.C;
-
 /**
  * @author jd
  * @date 2022/8/4 15:36
@@ -15,16 +13,21 @@ public class Context {
 
     private State currentState;
 
-    public State getCurrentState(){
-        return  currentState;
+    public State getCurrentState() {
+        return currentState;
     }
 
-    public void setCurrentState(State currentState ){
+    public void setCurrentState(State currentState) {
         this.currentState = currentState;
         this.currentState.setContext(this);
     }
 
-    public void handle1(){this.currentState.handle1();}
-    public void handle2(){this.currentState.handle2();}
+    public void handle1() {
+        this.currentState.handle1();
+    }
+
+    public void handle2() {
+        this.currentState.handle2();
+    }
 
 }

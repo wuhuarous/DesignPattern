@@ -7,5 +7,5 @@ package com.jd.test.factory.human;
  */
 public abstract class AbstractHumanFactory {
 
-    abstract  Human createHuman();
+    abstract Human createHuman();
 }

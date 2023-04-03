@@ -7,14 +7,14 @@ package com.jd.test.factory.human;
  */
 public class HumanFactory {
 
-    private static  <T extends  Human> T createHuman(Class<T> c) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+    private static <T extends Human> T createHuman(Class<T> c) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
 
         Human human = null;
 
         human = (Human) Class.forName(c.getName()).newInstance();
 
 
-        return (T)human;
+        return (T) human;
 
     }
 

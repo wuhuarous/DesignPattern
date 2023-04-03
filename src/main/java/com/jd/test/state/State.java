@@ -14,7 +14,7 @@ public abstract class State {
 
     public abstract void handle1();
 
-    public abstract  void handle2();
+    public abstract void handle2();
 
 
 }

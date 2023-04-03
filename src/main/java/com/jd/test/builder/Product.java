@@ -7,7 +7,7 @@ package com.jd.test.builder;
  */
 public class Product {
 
-    public void doSomething(){
+    public void doSomething() {
 
         System.out.println("dosomething");
 

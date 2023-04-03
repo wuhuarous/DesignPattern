@@ -41,7 +41,7 @@ public class Test {
 
     }
 
-    public static void get(int a){
+    public static void get(int a) {
         System.out.println(a);
     }
 }

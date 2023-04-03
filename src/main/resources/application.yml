@@ -1,9 +1,23 @@
+server:
+  port: 8006
+
 spring:
   profiles:
     active: dev
+  data:
+#    elasticsearch:
+#       cluster-name: my-application
+#       cluster-nodes: 127.0.0.1:9300 #9200是图形界面端,9300代码端
   application:
     # 服务端创建的项目 id 需要与 application.name 保持一致
     name: dynamic-threadpool-example
+  redis:
+    host: 10.200.10.6
+    database: 1
+    port: 6379
+    password: 3KWRq7vvGxER
+    # 连接超时时间（毫秒）
+    timeout: 10000
   dynamic:
     thread-pool:
       # 服务端地址
@@ -16,3 +30,38 @@ spring:
       namespace: prescription
       # 项目 id, 对应 item 表
       item-id: ${spring.application.name}
+      report-type: netty
+      netty-server-port: 8899
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: 101.43.63.132:9092
+          zkNodes: 101.43.63.132:2181
+          autoCreateTopics: true
+      bindings:
+        input:
+          consumer:
+            #并发数
+            concurrency: 4
+            #指定重试消费者的最大次数 如果未设置默认是3
+            max-attempts: 1
+          #指定要连接的消息代理的目标主题或队列名称。channelName 为通道的名称，可以在应用程序中自定义。
+          destination: test-kafka
+          #通道的消息内容类型 比如 "application/json" 或 "text/plain" 等。
+          contentType: application/json
+          #指定一个消息消费组名称，用于允许在多个消费者之间进行消息负载平衡。如果没有指定，则默认创建一个新的随机组。
+          group:
+        input2:
+          consumer:
+            concurrency: 4
+            max-attempts: 1
+          destination: my-topic
+          contentType: application/json
+        output:
+          destination: test-kafka
+          contentType: application/json
+        output2:
+          destination: my-topic
+          contentType: application/json
+

@@ -12,7 +12,7 @@ public class RewardContext {
         this.rewardStrategy = rewardStrategy;
     }
 
-    public void doStrategy(int userId){
+    public void doStrategy(int userId) {
         rewardStrategy.reward(userId);
         //do something
     }

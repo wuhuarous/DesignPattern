@@ -13,7 +13,7 @@ public class MyEvent extends ApplicationEvent {
 
     private String b;
 
-    public MyEvent(Object source,String a) {
+    public MyEvent(Object source, String a) {
         super(source);
         this.b = a;
     }

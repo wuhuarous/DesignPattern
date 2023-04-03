@@ -8,9 +8,10 @@ import org.springframework.stereotype.Component;
  * @date 2022/8/2 15:58
  */
 @Component
-public class ConcreteObserverTwo implements  Observer{
+public class ConcreteObserverTwo implements Observer {
+
     @Override
     public void update(String message) {
-        System.out.println(message+ ":two");
+        System.out.println(message + ":two");
     }
 }

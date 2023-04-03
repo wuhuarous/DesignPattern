@@ -7,12 +7,13 @@ package com.jd.test.strategy;
  */
 public class Context {
 
-    public Strategy strategy= null;
+    public Strategy strategy = null;
 
-    public Context(Strategy strategy){
+    public Context(Strategy strategy) {
         this.strategy = strategy;
     }
-    public void doStrategy(){
+
+    public void doStrategy() {
         strategy.strategy();
     }
 }

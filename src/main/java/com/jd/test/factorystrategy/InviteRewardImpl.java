@@ -12,7 +12,7 @@ public class InviteRewardImpl {
         FactorRewardStrategyFactory factorRewardStrategyFactory = new FactorRewardStrategyFactory();
         RewardStrategy rewardStrategy = factorRewardStrategyFactory.createRewardStrategy(NewUserRewardStrategyA.class);
 
-        RewardContext rewardContext  =  new RewardContext(rewardStrategy);
+        RewardContext rewardContext = new RewardContext(rewardStrategy);
         rewardContext.doStrategy(1);
     }
 

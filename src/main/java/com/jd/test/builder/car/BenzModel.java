@@ -5,7 +5,7 @@ package com.jd.test.builder.car;
  * @author jd
  * @date 2022/8/8 11:18
  */
-public class BenzModel extends CarModel{
+public class BenzModel extends CarModel {
     @Override
     protected void start() {
         System.out.println("start");

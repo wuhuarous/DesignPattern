@@ -2,7 +2,6 @@ package com.jd.test.handle;
 
 
 import jdk.nashorn.internal.ir.RuntimeNode;
-import okhttp3.Request;
 
 /**
  * @author jd
@@ -14,19 +13,21 @@ public abstract class Handle {
 
     private int level;
 
-    public Handle(int level){
+    public Handle(int level) {
         this.level = level;
     }
 
-    public void setNextHandle(Handle handle){
+    public void setNextHandle(Handle handle) {
         this.nextHandle = handle;
     }
-    public final void handleMessage(int  lev){
-        if(level == lev){
+
+    public final void handleMessage(int lev) {
+        if (level == lev) {
             this.echo(lev);
-        }else{
+        } else {
 
         }
     }
-    public abstract  void echo(int level);
+
+    public abstract void echo(int level);
 }

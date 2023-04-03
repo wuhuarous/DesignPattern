@@ -13,7 +13,7 @@ public class Director {
 
     private BenzBuilder benzBuilder = new BenzBuilder();
 
-    public BenzModel getABenzModel(){
+    public BenzModel getABenzModel() {
         this.seq.clear();
         this.seq.add("start");
         this.seq.add("stop");

@@ -7,7 +7,7 @@ package com.jd.test.builder.tst;
  */
 public class Product {
 
-    public void dos(){
+    public void dos() {
         System.out.println("1");
     }
 }

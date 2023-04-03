@@ -29,15 +29,15 @@ public abstract class CarModel {
             } else if (actionName.equalsIgnoreCase("alarm")) {
                 this.alarm(); //喇叭开始叫了
             } else if (actionName.equalsIgnoreCase("engine boom")) {
-            //如果是engine boom关键this.engineBoom(); //引擎开始轰鸣
+                //如果是engine boom关键this.engineBoom(); //引擎开始轰鸣
             }
         }
 
 
-
     }
+
     //把传递过来的值传递到类内
-    final public void setSequence(ArrayList seq){
+    final public void setSequence(ArrayList seq) {
         this.seq = seq;
     }
 }

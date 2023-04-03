@@ -9,7 +9,8 @@ import java.util.concurrent.Callable;
  */
 public class Tclass1 implements Callable<String> {
 
-    private  String name;
+    private String name;
+
     public Tclass1(String name) {
         this.name = name;
     }

@@ -5,7 +5,7 @@ package com.jd.test.state;
  * @author jd
  * @date 2022/8/4 15:37
  */
-public class ConcreteStateB extends State{
+public class ConcreteStateB extends State {
 
     @Override
     public void handle1() {

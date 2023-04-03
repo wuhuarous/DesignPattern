@@ -8,9 +8,9 @@ package com.jd.test.builder;
 public class DireCtor {
     private Builder builder = new ConcreteBuilder();
 
-    public Product getProduct(){
+    public Product getProduct() {
 
         builder.setPrat();
-        return  builder.buildProduct();
+        return builder.buildProduct();
     }
 }
