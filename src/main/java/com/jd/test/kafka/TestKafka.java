@@ -25,12 +25,12 @@ public class TestKafka  {
     private final CountDownLatch  countDownLatch = new CountDownLatch(1);
 
 
-//    @Scheduled(cron = "0 * * * * *")
+    @Scheduled(cron = "0 * * * * *")
     public void test() {
 
         DelayCloseOrderEvent  en = new DelayCloseOrderEvent();
-        en.setOrderSn("我是test-kafka");
-        delayCloseOrderProvide.delayCloseOrderSend(en);
+//        en.setOrderSn("我是test-kafka");
+//        delayCloseOrderProvide.delayCloseOrderSend(en);
         en.setOrderSn("我是my-topic");
         delayCloseOrderProvide2.delayCloseOrderSend(en);
     }

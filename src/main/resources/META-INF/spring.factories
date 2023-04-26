@@ -16,5 +16,8 @@
 #
 
 #org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.jd.test.kafka.config.RocketMQAutoConfiguration
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.jd.test.idempotent.config.IdempotentAutoConfiguration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.jd.test.idempotent.config.IdempotentAutoConfiguration,\
+  com.jd.test.cache.config.CacheAutoConfiguration
+
 

@@ -18,9 +18,13 @@
 package com.jd.test.idempotent.config;
 
 
+import com.jd.test.cache.DistributedCache;
 import com.jd.test.idempotent.core.IdempotentAspect;
 import com.jd.test.idempotent.core.param.IdempotentParamExcuteHandler;
 import com.jd.test.idempotent.core.param.IdempotentParamService;
+import com.jd.test.idempotent.core.spel.IdempotentSpELService;
+import com.jd.test.idempotent.core.spel.IdempotentSpelByMQExecuteHandler;
+import com.jd.test.idempotent.core.spel.IdempotentSpelByRestAPIExecuteHandler;
 import org.redisson.api.RedissonClient;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -52,5 +56,15 @@ public class IdempotentAutoConfiguration {
     public IdempotentParamService idempotentParamExecuteHandler(RedissonClient redissonClient) {
         return new IdempotentParamExcuteHandler(redissonClient);
     }
-    
+
+    @Bean
+    @ConditionalOnMissingBean
+    public IdempotentSpELService idempotentSpelByRestAPIExecuteHandler(RedissonClient redissonClient) {
+        return new IdempotentSpelByRestAPIExecuteHandler(redissonClient);
+    }
+    @Bean
+    @ConditionalOnMissingBean
+    public IdempotentSpelByMQExecuteHandler idempotentSpelByMQExecuteHandler(DistributedCache distributedCache) {
+        return new IdempotentSpelByMQExecuteHandler(distributedCache);
+    }
 }

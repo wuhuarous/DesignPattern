@@ -1,6 +1,8 @@
 package com.jd.test.hippo4j.console;
 
 
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,12 +21,14 @@ import java.util.concurrent.TimeUnit;
  * @date 2023/3/3 14:41
  */
 @RestController
+@EnableAsync
 @RequestMapping(value = "test/asyncContext")
 public class AsyncContentConroller {
 
     private static ThreadPoolExecutor executor = new ThreadPoolExecutor(100, 200, 50000L, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<>(100));
 
     @GetMapping(value = "servlet/pull")
+    @Async
     public @ResponseBody void startServer(HttpServletRequest request, HttpServletResponse response) {
         String name = Thread.currentThread().getName();
         System.out.println("--------当前线程名称-------" + name);

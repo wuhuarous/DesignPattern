@@ -1,6 +1,7 @@
 package com.jd.test.idempotent.core;
 
 
+import com.jd.test.idempotent.RepeatConsumptionException;
 import com.jd.test.idempotent.annotation.Idempotent;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -18,21 +19,24 @@ public class IdempotentAspect {
 
 
     @Around("@annotation(com.jd.test.idempotent.annotation.Idempotent)")
-    public Object idempotentHandler(ProceedingJoinPoint joinPoint) throws NoSuchMethodException {
+    public Object idempotentHandler(ProceedingJoinPoint joinPoint) throws Throwable {
         Idempotent idempotent = getIdempotent(joinPoint);
         IdempotentExecuteHandler instance = IdempotentExecuteHandlerFactory.getInstance(idempotent.scene(), idempotent.type());
         try {
             instance.execute(joinPoint, idempotent);
             return joinPoint.proceed();
-        } catch (Throwable e) {
-            throw new RuntimeException(e);
+        } catch (RepeatConsumptionException ex) {
+            if (!ex.getError()) {
+                return null;
+            }
+            throw ex;
         } finally {
             instance.postProcessing();
             IdempotentContext.clean();
         }
     }
 
-    private static Idempotent getIdempotent(ProceedingJoinPoint joinPoint) throws NoSuchMethodException {
+    public static Idempotent getIdempotent(ProceedingJoinPoint joinPoint) {
 
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method declaredMethod = signature.getMethod();
