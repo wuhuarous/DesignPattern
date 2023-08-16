@@ -18,4 +18,9 @@ public class ListenerOne implements ApplicationListener<MyEvent> {
         System.out.println("22222222" + myEvent.getB());
     }
 
+    public static void main(String[] args) {
+        Class<?>[] interfaces = ListenerOne.class.getInterfaces();
+        System.out.println(interfaces[0]);
+    }
+
 }

@@ -16,6 +16,9 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import static com.jd.test.hippo4j.console.EurekaMonitors.EXPIRED;
+import static com.jd.test.hippo4j.console.EurekaMonitors.STATUS_UPDATE;
+
 /**
  * @author jd
  * @date 2023/3/3 14:41
@@ -28,8 +31,15 @@ public class AsyncContentConroller {
     private static ThreadPoolExecutor executor = new ThreadPoolExecutor(100, 200, 50000L, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<>(100));
 
     @GetMapping(value = "servlet/pull")
-    @Async
     public @ResponseBody void startServer(HttpServletRequest request, HttpServletResponse response) {
+        EXPIRED.increment();
+        EXPIRED.put("22","333");
+        for (int i = 0; i < 10; i++) {
+            STATUS_UPDATE.increment();
+        }
+        STATUS_UPDATE.put("22","4444");
+        System.out.println("expired: "+ EXPIRED.get("22") +" update "+ STATUS_UPDATE.get("22"));
+
         String name = Thread.currentThread().getName();
         System.out.println("--------当前线程名称-------" + name);
         try {

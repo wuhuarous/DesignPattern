@@ -1,6 +1,7 @@
 package com.jd.test;
 
 
+import cn.hippo4j.core.enable.EnableDynamicThreadPool;
 import com.alibaba.fastjson.JSONObject;
 import com.jd.test.idempotent.annotation.Idempotent;
 import com.jd.test.idempotent.enums.IdempotentSceneEnum;
@@ -11,6 +12,7 @@ import com.jd.test.ob.Subject;
 import com.jd.test.retrylock.annonation.RetryLock;
 import com.jd.test.retrylock.enums.RetryLockTypeEnums;
 import lombok.Data;
+import org.dromara.easyes.starter.register.EsMapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.stream.annotation.EnableBinding;
@@ -33,6 +35,8 @@ import java.util.concurrent.Semaphore;
 @EnableBinding({Source.class, Sink.class})
 //@EnableDynamicThreadPool
 @RestController
+@EsMapperScan("com.jd.test.elastic")
+//@EnableEurekaServer
 public class App {
     @Resource
     private Subject subject;

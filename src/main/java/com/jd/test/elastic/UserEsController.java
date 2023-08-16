@@ -1,62 +1,69 @@
-/*
+
 package com.jd.test.elastic;
 
 
-import org.apache.lucene.queryparser.xml.QueryBuilder;
-import org.apache.lucene.queryparser.xml.builders.BooleanQueryBuilder;
-import org.elasticsearch.index.query.BoolQueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
-import org.springframework.data.domain.*;
-import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
+import cn.hutool.core.lang.generator.UUIDGenerator;
+import com.jd.test.elastic.entity.EsCustomer;
+import com.jd.test.elastic.entity.EsUser;
+import com.jd.test.elastic.mapper.UserMapper;
+import com.jd.test.elastic.mapper.UserTMapper;
+import lombok.RequiredArgsConstructor;
+import org.dromara.easyes.core.biz.EsPageInfo;
+import org.dromara.easyes.core.conditions.select.LambdaEsQueryWrapper;
+import org.dromara.easyes.core.core.EsWrappers;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
-import java.awt.*;
-import java.util.Optional;
-import java.util.Queue;
+import java.io.IOException;
+import java.util.List;
+import java.util.UUID;
 
-*/
+
 /**
  * @author jd
  * @date 2022/8/25 11:06
- *//*
+ */
 
 @RestController
+@RequiredArgsConstructor
 public class UserEsController {
 
-    @Resource
-    private UserEsRepository userEsRepository;
+    private final UserMapper userMapper;
 
-    @PostConstruct
-    private void test(){
-        UserEs es = new UserEs();
 
-        for (int i = 0; i < 20; i++) {
-            es.setId(1301+i);
-            es.setName("李四"+i);
-            es.setSex("女");
-            InfoEs infoEs = new InfoEs();
-            infoEs.setAge("16");
-            infoEs.setId(i);
-            infoEs.setName("1"+i);
-            es.setInfo(infoEs);
-            userEsRepository.save(es);
-        }
+    @PostMapping("/page")
+    private EsPageInfo<EsUser> test(@RequestBody List<Object> nextSearchAfter) throws IOException {
 
-        NativeSearchQueryBuilder builder = new NativeSearchQueryBuilder();
+        //wrappers两种构建方式
+        //第一种 直接new 例如：查询  new LambdaEsQueryWrapper<>() 更新： new LambdaEsUpdateWrapper<>()
+        LambdaEsQueryWrapper<EsUser> wrapper = new LambdaEsQueryWrapper<>();
+//        wrapper.le(EsUser::getAge, 40);
+        wrapper.eq(EsUser::getName, "黄鑫");
+        wrapper.orderByDesc(EsUser::getId);
 
-        BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery();
+        EsPageInfo<EsUser> esUserEsPageInfo = userMapper.pageQuery(wrapper, 1, 10);
 
-        queryBuilder.must(QueryBuilders.matchQuery("name","张三"));
 
-        builder.withQuery(queryBuilder);
-        builder.withPageable(PageRequest.of(1,10));
-        System.out.println("-------------");
-//        Page<UserEs> search = userEsRepository.searchSimilar(es,null,PageRequest.of(1,10));
-//        System.out.println(search);
-//        userEsRepository.fina();
+
+        //第二种通过EsWrappers.lambdaQuery()创建
+        EsPageInfo<EsUser> list = EsWrappers.lambdaChainQuery(userMapper).page(1, 10);
+
+
+        return esUserEsPageInfo;
+    }
+
+    @PostMapping("/getUserList")
+    private List<EsUser> getUserList() throws IOException {
+        List<EsUser> es = EsWrappers.lambdaChainQuery(userMapper).orderByDesc(EsUser::getId).list();
+        return es;
+    }
+
+
+    @PostMapping("/add")
+    private Integer add(@RequestBody EsUser esUser) throws IOException {
+        return userMapper.insert(esUser);
     }
 
 }
-*/
+
