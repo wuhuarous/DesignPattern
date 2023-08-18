@@ -15,6 +15,8 @@ import org.redisson.api.RedissonClient;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import java.util.concurrent.locks.ReentrantLock;
+
 /**
  * @author jd
  * @date 2023/3/22 11:27
@@ -46,6 +48,9 @@ public class RetryLockPramExecuteHandler extends AbstractRetryLockTemplate imple
     public void handler(RetryLockBuildWrapper buildWrapper) {
         String lockKey = buildWrapper.getLockKey();
         RLock lock = redissonClient.getLock(lockKey);
+        ReentrantLock lock1 = new ReentrantLock();
+
+        lock1.tryLock();
 
         if (!lock.tryLock()) {
             throw new RuntimeException(buildWrapper.getRetryLock().message());
